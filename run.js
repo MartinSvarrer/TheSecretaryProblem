@@ -1,4 +1,6 @@
-var NUM_OF_CANDIDATES = 100;
+var NUM_OF_CANDIDATES = 100,
+	NUM_OF_ITERATIONS = 100000,
+	CONVERT_TO_PERCENT = true;
 
 function pickCandidate () {
 	var candidates = (function () {
@@ -52,7 +54,7 @@ function pickCandidate () {
 }
 
 var result = {};
-for (var i = 0; i < 100000; i++) {
+for (var i = 0; i < NUM_OF_ITERATIONS; i++) {
 	var candidate = pickCandidate();
 	var value = candidate.value.toString();
 	if (result[value] === undefined) {
@@ -62,5 +64,11 @@ for (var i = 0; i < 100000; i++) {
 	result[value]++;
 }
 
-console.log(result);
+if (CONVERT_TO_PERCENT) {
+	for (var r in result) {
+		result[r] = parseFloat((result[r] / NUM_OF_ITERATIONS * 100).toFixed(2));
+	}
+}
+
 // Print ..
+console.log(result);
